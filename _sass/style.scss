@@ -1,0 +1,144 @@
+@charset "utf-8";
+
+// use compass css3
+// http://compass-style.org/reference/compass/css3/
+@import "compass/css3";
+
+// import normalize.css
+// http://necolas.github.com/normalize.css/
+@import "normalize";
+
+// use compass clearfix
+// http://compass-style.org/reference/compass/utilities/general/clearfix/
+// usege : @include clearfix;
+@import "compass/utilities/general/clearfix";
+
+
+// -------------------------------------------------
+// background-color controll 
+// -------------------------------------------------
+
+$baseBoxLightColor:    #f0f0f0;
+$lightColor:           #ffffff;
+$baseDarkColor:        #333333;
+
+$baseLightColor:       #00b7ea;
+$baseDeepColor:        #009ec3;
+
+$baseActiveLightColor: #ff5db1;
+$baseActiveDeepColor:  #ef017c;
+
+$baseOpneLightColor:   #52b152;
+$baseOpenDeepColor:    #005700;
+
+@mixin deepGradient {
+  @include background-image(linear-gradient($baseLightColor, $baseDeepColor));
+}
+
+@mixin deepActiveGradient {
+  @include background-image(linear-gradient($baseActiveLightColor, $baseActiveDeepColor));
+}
+
+@mixin deepOpenGradient {
+  @include background-image(linear-gradient($baseOpneLightColor, $baseOpenDeepColor));
+}
+
+/*==================================================
+	body & adjust
+===================================================*/
+
+body {
+  background-color: $baseBoxLightColor;
+}
+
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+dd {
+  margin:  0;
+}
+
+a {
+  text-decoration: none;
+  color: $baseDeepColor;
+
+  &:visited {
+    color: $baseDeepColor;
+  }
+  &:hover,
+  &:active {
+    color: $baseActiveDeepColor;
+  }
+}
+
+/*==================================================
+	accordion
+===================================================*/
+
+#wrapper {
+  padding: 20px;
+}
+
+.linkList {
+  border: solid $baseDeepColor;
+  border-width: 1px 0 0 0;
+
+  li {
+    margin: 0;
+  }
+  
+  a {
+    display: block;
+    padding: 5px 10px;
+    border: solid $baseDeepColor;
+    border-width: 0 1px 1px 1px;
+
+    &:hover,
+    &:active {
+      color: $lightColor;
+      background: $baseOpenDeepColor;
+    }
+  }
+}
+
+.accordion {
+  :nth-child(odd) {
+    padding: 10px 20px;
+    @include deepGradient;
+    @include text-shadow(1px 1px 1px #333333);
+    color: $lightColor;
+    
+    &:hover,
+    &.open {
+      cursor: pointer;
+      @include deepOpenGradient;
+    }
+    &.active {
+      cursor: pointer;
+      @include deepActiveGradient;
+
+      + :nth-child(even) {
+        border: solid $baseActiveDeepColor;
+        border-width: 0 1px;
+
+        &:last-child {
+          border-bottom: 1px solid $baseActiveDeepColor;
+        }
+      }
+    }
+  };
+  :nth-child(even) {
+    display: none;
+    padding: 10px 20px;
+    border: solid $baseOpenDeepColor;
+    border-width: 0 1px;
+    background-color: $lightColor;
+
+    &:last-child {
+      border-bottom: 1px solid $baseOpenDeepColor;
+    }
+  };
+}
